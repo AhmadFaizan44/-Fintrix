@@ -73,9 +73,9 @@ fintrix/
 
 ## 🧑‍💻 Author
 
-**Shan Munir**
+**Ahmad Faizan**
 📧 [hello@fintrix.example](mailto:hello@fintrix.example)
-🔗 GitHub: [github.com/<your-username>](https://github.com/)
+🔗 GitHub: [github.com/<AhmadFaizan44>](https://github.com/)
 
 ---
 
