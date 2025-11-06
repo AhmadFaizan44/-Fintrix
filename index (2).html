@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fintrix — Strategic Wealth & Finance</title>
+  <style>
+    /* ---------------------------
+       Basic reset and utilities
+       --------------------------- */
+    :root{
+      --teal:#0e9f9f;
+      --teal-dark:#0a7e7e;
+      --muted:#7b8b95;
+      --bg:#f7fbfb;
+      --card:#ffffff;
+      --accent:#ffb86b;
+      --radius:14px;
+      --max:1100px;
+      --glass: rgba(255,255,255,0.7);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background: linear-gradient(180deg,var(--bg),#eef7f7);
+      color:#123;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{max-width:var(--max);margin:0 auto;padding:36px 20px}
+
+    /* ---------------------------
+       Header
+       --------------------------- */
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;
+    }
+    .brand .logo{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-family:monospace;
+      box-shadow:0 6px 16px rgba(10,126,126,0.18);
+    }
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);font-weight:600;font-size:0.95rem}
+    .cta{
+      background:var(--teal);color:white;padding:10px 16px;border-radius:10px;font-weight:700;
+      box-shadow:0 6px 18px rgba(14,159,159,0.12)
+    }
+    .signup{background:transparent;border:1px solid rgba(10,10,10,0.06);padding:8px 12px;border-radius:8px;font-weight:600;color:var(--muted)}
+
+    /* ---------------------------
+       Hero
+       --------------------------- */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 430px;
+      gap:28px;
+      align-items:center;
+      margin:28px 0 40px 0;
+    }
+    .eyebrow{color:var(--muted);font-weight:600;font-size:0.9rem;margin-bottom:10px}
+    h1{font-size:2.4rem;line-height:1.04;margin-bottom:12px}
+    h1 .accent{color:var(--teal)}
+    p.lead{color:var(--muted);max-width:54ch;margin-bottom:18px}
+    .hero .form{
+      display:flex;gap:10px;margin-top:8px;align-items:center;
+    }
+    .hero input[type="email"]{
+      padding:12px 14px;border-radius:10px;border:1px solid #e6efef;background:white;flex:1;
+      font-size:0.95rem;
+    }
+    .hero button{padding:12px 16px;border-radius:10px;background:var(--teal);color:white;border:0;font-weight:700}
+
+    /* chart card */
+    .chart-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      border-radius:18px;padding:18px;box-shadow:0 18px 40px rgba(10,80,80,0.06);
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .chart-top{display:flex;justify-content:space-between;align-items:center}
+    .small-stats{display:flex;gap:10px;align-items:center}
+    .pill{background:rgba(14,159,159,0.08);color:var(--teal);padding:6px 10px;border-radius:999px;font-weight:700;font-size:0.88rem}
+
+    /* simple SVG line chart container */
+    .svg-wrap{width:100%;height:170px}
+    /* client logos row */
+    .clients{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:18px 0 8px}
+    .client-badge{background:white;border-radius:8px;padding:8px 10px;box-shadow:0 6px 16px rgba(50,80,80,0.04);font-weight:700;color:var(--muted);font-size:0.9rem}
+
+    /* ---------------------------
+       Sections: expertise / services
+       --------------------------- */
+    .section{margin:28px 0;padding:28px 0}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .card{
+      background:var(--card);padding:18px;border-radius:14px;box-shadow:0 10px 24px rgba(12,70,70,0.04);
+      display:flex;gap:14px;align-items:flex-start;
+    }
+    .icon{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+      color:white;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:monospace;
+    }
+    .card h3{margin-bottom:8px}
+    .muted{color:var(--muted);font-size:0.95rem}
+
+    /* ---------------------------
+       Testimonial slider
+       --------------------------- */
+    .testimonials{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:center}
+    .slider{background:linear-gradient(180deg,var(--card),#fbffff);padding:18px;border-radius:14px;box-shadow:0 16px 36px rgba(10,80,80,0.04)}
+    .testimonial{display:none}
+    .testimonial.active{display:block}
+    .quote{font-size:1rem;color:#123}
+    .tmeta{margin-top:12px;display:flex;gap:12px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:999px;background:#e6f7f7;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--teal)}
+
+    /* CTA strip */
+    .cta-strip{background:var(--teal-dark);color:white;padding:24px;border-radius:16px;margin:26px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .cta-strip input{padding:10px 12px;border-radius:10px;border:0;margin-right:12px}
+
+    /* Footer */
+    footer{margin-top:20px;padding:26px 0;color:var(--muted)}
+    .footer-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+    .footer-grid div{min-width:180px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding-bottom:12px}
+      .chart-card{order:2}
+      .testimonials{grid-template-columns:1fr;gap:12px}
+      .cards{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width:520px){
+      h1{font-size:1.8rem}
+      .brand{font-size:0.95rem}
+      .svg-wrap{height:140px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand" aria-label="Fintrix brand">
+        <div class="logo">F</div><div>Fintrix</div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#help">Help</a>
+      </nav>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="signup" onclick="alert('Sign-in flow placeholder')">Sign in</button>
+        <button class="cta" onclick="alert('Get started placeholder')">Get Started</button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero section">
+      <div>
+        <div class="eyebrow">Navigate the modern financial world</div>
+        <h1>Empowering your path to <span class="accent">Financial Success</span></h1>
+        <p class="lead">Strategic planning, personalized investment advice, and clear reporting — designed to help individuals and families grow and protect wealth.</p>
+
+        <div class="hero-cta" style="display:flex;flex-direction:column;gap:10px;max-width:560px">
+          <div class="hero .form" style="display:flex;gap:10px">
+            <input type="email" placeholder="Your email address" aria-label="email">
+            <button onclick="alert('Demo request sent')">Request demo</button>
+          </div>
+          <div style="color:var(--muted);font-size:0.92rem">
+            Trusted by leading teams & financial groups
+            <div class="clients" style="margin-top:8px">
+              <div class="client-badge">Atlas</div>
+              <div class="client-badge">BlueCap</div>
+              <div class="client-badge">Orion</div>
+              <div class="client-badge">Nimbus</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: chart card -->
+      <aside class="chart-card" aria-hidden="false">
+        <div class="chart-top">
+          <div>
+            <div style="font-size:0.9rem;color:var(--muted)">Portfolio growth</div>
+            <div style="font-weight:800;font-size:1.3rem">+28.4% <span style="color:var(--muted);font-size:0.9rem;font-weight:600">YOY</span></div>
+          </div>
+          <div class="small-stats">
+            <div class="pill">Active</div>
+          </div>
+        </div>
+
+        <div class="svg-wrap" role="img" aria-label="Mock portfolio chart">
+          <!-- Simple decorative SVG line chart -->
+          <svg viewBox="0 0 600 200" preserveAspectRatio="none" style="width:100%;height:100%">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#aaf1ef" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="white" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,150 C60,130 120,110 180,120 C240,130 300,70 360,80 C420,90 480,40 540,30 L540,200 L0,200 Z" fill="url(#g1)"></path>
+            <path d="M0,150 C60,130 120,110 180,120 C240,130 300,70 360,80 C420,90 480,40 540,30" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- points -->
+            <circle cx="60" cy="130" r="4" fill="#0e9f9f"/><circle cx="180" cy="120" r="4" fill="#ffb86b"/><circle cx="360" cy="80" r="4" fill="#0e9f9f"/><circle cx="540" cy="30" r="4" fill="#0e9f9f"/>
+          </svg>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:0.92rem;color:var(--muted)">
+            Overview • Last 12 months
+          </div>
+          <div style="font-weight:700">Estimated value <span style="color:var(--teal);font-size:1rem">$1.24M</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Expertise / Transforming finances -->
+    <section class="section" id="services">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+        <div style="max-width:58%">
+          <h2 style="margin-bottom:8px">Transforming finances with strategic wealth management</h2>
+          <p class="muted">We bring modern financial planning with human-centered guidance. Our team combines data-driven investment solutions with tailored tax & retirement strategies.</p>
+        </div>
+        <div style="min-width:220px">
+          <button class="cta" style="width:100%" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore services</button>
+        </div>
+      </div>
+
+      <div class="cards" style="margin-top:18px">
+        <div class="card">
+          <div class="icon">A</div>
+          <div>
+            <h3>Investment Advisory</h3>
+            <div class="muted">Portfolio construction, rebalancing, tax-aware allocation and performance reviews.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">P</div>
+          <div>
+            <h3>Private Planning</h3>
+            <div class="muted">Retirement roadmaps, legacy design, and cashflow modeling for families and individuals.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">R</div>
+          <div>
+            <h3>Risk Management</h3>
+            <div class="muted">Stress testing, downside controls and scenario planning to protect capital.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">T</div>
+          <div>
+            <h3>Tax & Trust Services</h3>
+            <div class="muted">Coordination with tax advisors and trust administration for efficient wealth transfer.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials + team features -->
+    <section class="section" id="about">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1;min-width:300px">
+          <h3>What our clients say</h3>
+          <div class="slider" aria-live="polite">
+            <div class="testimonial active" id="t1">
+              <div class="quote">"Fintrix helped us build a plan that actually fits our family. We finally feel prepared for the next decade."</div>
+              <div class="tmeta">
+                <div class="avatar">AG</div>
+                <div>
+                  <div style="font-weight:800">Alex G.</div>
+                  <div class="muted">Founder • Tech</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial" id="t2">
+              <div class="quote">"Quarterly reports are clear and the team answers complex tax questions in plain language."</div>
+              <div class="tmeta">
+                <div class="avatar">ML</div>
+                <div>
+                  <div style="font-weight:800">Maya L.</div>
+                  <div class="muted">Creative Director</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial" id="t3">
+              <div class="quote">"Their proactive moves during market dips kept our portfolio on track."</div>
+              <div class="tmeta">
+                <div class="avatar">RK</div>
+                <div>
+                  <div style="font-weight:800">R. Khan</div>
+                  <div class="muted">Entrepreneur</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button onclick="prevTestimonial()" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">←</button>
+              <button onclick="nextTestimonial()" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:260px">
+          <h3>Our team provides valuable services anytime</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+            <div style="background:white;padding:12px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,0.03)">
+              <div style="font-weight:800">Expert Guidance</div>
+              <div class="muted">Personalized plans and ongoing advice aligned with your goals.</div>
+            </div>
+
+            <div style="background:white;padding:12px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,0.03)">
+              <div style="font-weight:800">Risk Management</div>
+              <div class="muted">Practical downside planning and stress-tested portfolios.</div>
+            </div>
+
+            <div style="background:white;padding:12px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,0.03)">
+              <div style="font-weight:800">Custom Solutions</div>
+              <div class="muted">Tailored strategies for complex family and business needs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA strip -->
+    <section class="cta-strip" aria-label="Call to action">
+      <div style="flex:1;min-width:220px">
+        <div style="font-weight:800;font-size:1.1rem">Get started — Free consultation</div>
+        <div style="color:rgba(255,255,255,0.9)">No credit card required. One quick call can set the direction.</div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <input placeholder="Your email" aria-label="cta email">
+        <button class="cta" onclick="alert('Thanks — we will be in touch')">Book a call</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight:800;margin-bottom:6px">Fintrix</div>
+          <div class="muted">Smart, modern financial planning for the long run.</div>
+        </div>
+
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Services</div>
+          <div class="muted">Investment Advisory<br>Private Planning<br>Risk Management</div>
+        </div>
+
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Resources</div>
+          <div class="muted">Blog<br>Help Center<br>Contact</div>
+        </div>
+
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Contact</div>
+          <div class="muted">hello@fintrix.example<br>+1 (555) 123-4567</div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;color:var(--muted);font-size:0.9rem">
+        © <span id="year"></span> Fintrix — All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Small niceties: current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple testimonial slider
+    const testimonials = Array.from(document.querySelectorAll('.testimonial'));
+    let tIndex = 0;
+    function showTestimonial(i){
+      testimonials.forEach((t, idx) => t.classList.toggle('active', idx === i));
+    }
+    function nextTestimonial(){ tIndex = (tIndex + 1) % testimonials.length; showTestimonial(tIndex); }
+    function prevTestimonial(){ tIndex = (tIndex - 1 + testimonials.length) % testimonials.length; showTestimonial(tIndex); }
+    // auto rotate every 6s
+    setInterval(() => { nextTestimonial(); }, 6000);
+
+    // very small accessibility: keyboard for slider
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowLeft') prevTestimonial();
+      if(e.key === 'ArrowRight') nextTestimonial();
+    });
+  </script>
+</body>
+</html>
